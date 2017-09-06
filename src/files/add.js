@@ -2,7 +2,7 @@
 
 const isStream = require('is-stream')
 const promisify = require('promisify-es6')
-const DAGNodeStream = require('../utils/dagnode-stream')
+const converter = require('../utils/converter')
 
 module.exports = (send) => {
   return promisify((files, opts, callback) => {
@@ -23,8 +23,6 @@ module.exports = (send) => {
 
     const request = { path: 'add', files: files, qs: opts }
 
-    // Transform the response stream to DAGNode values
-    const transform = (res, callback) => DAGNodeStream.streamToValue(send, res, callback)
-    send.andTransform(request, transform, callback)
+    send.andTransform(request, converter, callback)
   })
 }
