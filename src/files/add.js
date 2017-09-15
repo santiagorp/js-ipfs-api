@@ -41,6 +41,12 @@ module.exports = (send) => {
       qs.hash = opts.hashAlg
     }
 
+    if (opts['only-hash'] != null) {
+      qs['only-hash'] = opts['only-hash']
+    } else if (opts.onlyHash != null) {
+      qs['only-hash'] = opts.onlyHash
+    }
+
     const request = { path: 'add', files: files, qs: qs }
 
     // Transform the response stream to DAGNode values
